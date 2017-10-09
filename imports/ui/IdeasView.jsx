@@ -6,6 +6,9 @@ import ReactDOM from 'react-dom';
 import {Meteor} from 'meteor/meteor';
 import NavBar from './NavBar.jsx'
 
+/* Jairo Bautista: En terminos generales el componente para crear una idea esta muy completo, 
+pero se hubiera podido modularizar mas la parte de requerimientos */
+
 // IdeasView component - represents the whole app
 class IdeasView extends Component {
 
@@ -83,6 +86,9 @@ class IdeasView extends Component {
   }
 }
 
+
+/* Jairo Bautista: Los proptypes son buenso cuando se tiene create container, 
+buen uso de acercar los datos hasta la idea */
 export default createContainer(() => {
   Meteor.subscribe('ideas');
   return {

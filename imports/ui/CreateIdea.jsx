@@ -3,7 +3,8 @@ import {Meteor} from 'meteor/meteor';
 import NavBar from './NavBar.jsx'
 import {Redirect} from 'react-router';
 import AccountsUIWrapper from './AccountsUIWrapper.jsx';
-
+/* Jairo Bautista: En terminos generales el componente para crear una idea esta muy completo, 
+pero se hubiera podido modularizar mas la parte de requerimientos */
 class CreateIdea extends Component {
 
   constructor(props) {

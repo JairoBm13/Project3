@@ -6,6 +6,8 @@ import ReactDOM from 'react-dom';
 import {Meteor} from 'meteor/meteor';
 import NavBar from './NavBar.jsx'
 
+/* Jairo Bautista: En terminos generales el componente para crear una idea esta muy completo */
+
 // ProjectsView component - represents the whole app
 class ProjectsView extends Component {
 

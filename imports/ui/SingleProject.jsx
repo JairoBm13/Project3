@@ -40,6 +40,7 @@ class SingleProject extends Component {
 
   sendMail() {
       // Client: Asynchronously send an email.
+      //No deberia ser un email al email que uso el usuario para registrarse (el del dueño del proyecto)
       Meteor.call(
           'sendEmail',
           'Alice <dianasbeltran@gmail.com>',

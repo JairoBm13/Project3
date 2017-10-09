@@ -42,6 +42,7 @@ Meteor.methods({
     ideas.update(ideaId, { $set: { checked: setChecked } });
   },
   'ideas.setPrivate'(ideaId, setToPrivate) {
+    // Jairo Bautista: No veo que esten utilizando este method
     check(ideaId, String);
     check(setToPrivate, Boolean);
 

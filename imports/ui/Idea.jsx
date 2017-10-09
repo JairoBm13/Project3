@@ -3,7 +3,8 @@ import {Ideas} from '../api/ideas.jsx';
 import {Meteor} from 'meteor/meteor';
 import classnames from 'classnames';
 import {Link} from 'react-router-dom';
-
+/* Jairo Bautista: En terminos generales el componente para crear una idea esta muy completo, 
+pero se hubiera podido modularizar mas la parte de requerimientos */
 export default class Idea extends Component {
   constructor(props) {
     super(props);
@@ -93,7 +94,7 @@ export default class Idea extends Component {
     );
   }
 }
-
+/* Jairo Bautista: Los proptypes son muy utiles :( */
 
 Idea.propTypes = {
   // This component gets the idea to display through a React prop.

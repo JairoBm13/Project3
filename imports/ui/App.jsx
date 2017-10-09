@@ -32,6 +32,8 @@ class App extends Component {
   }
 }
 
+
+// Jairo Bautista: Buen uso del router, me gusta
 const NotFound = () => (
   <h1>404.. This page is not found!</h1>);
 

@@ -2,6 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import {Link} from 'react-router-dom';
 import AccountsUIWrapper from './AccountsUIWrapper.jsx';
 
+//Un componente sin props ni sate, bien hecho de esta manera
 const NavBar = () => (
   <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNavBar">
     <div className="container">

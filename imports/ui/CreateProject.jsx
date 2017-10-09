@@ -3,7 +3,8 @@ import {Meteor} from 'meteor/meteor';
 import NavBar from './NavBar.jsx'
 import AccountsUIWrapper from './AccountsUIWrapper.jsx';
 import {Redirect} from 'react-router';
-
+/* Jairo Bautista: En terminos generales el componente para crear una idea esta muy completo, 
+pero se hubiera podido modularizar mas la parte de requerimientos */
 class CreateProject extends Component {
 
   constructor(props) {
@@ -35,6 +36,8 @@ class CreateProject extends Component {
     this.setState({value});
   }
 
+  /* Jairo Bautista: Esta funcion podria ser 
+  un componente que reciba por props los tags de la idea o no, y asíreusa codigo. */
   renderRequirements() {
     let uiItems = [];
     for (let i = 0; i < this.state.count; i++) {
