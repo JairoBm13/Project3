@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { Router, Route } from 'react-router';
 import createBrowserHistory from 'history/createBrowserHistory';
-import ProjectsView from './ProjectsView.jsx'
-import IdeasView from './IdeasView.jsx'
-import CreateProject from './CreateProject.jsx'
-import SingleProject from './SingleProject.jsx'
+import ProjectsView from './ListView/ProjectsView.jsx'
+import IdeasView from './ListView/IdeasView.jsx'
+import CreateProject from './Creators/CreateProject.jsx'
+import SingleProject from './SingleView/SingleProject.jsx'
 import { Redirect } from 'react-router';
-import CreateIdea from './CreateIdea.jsx'
+import CreateIdea from './Creators/CreateIdea.jsx'
 
 const browserHistory = createBrowserHistory();
 

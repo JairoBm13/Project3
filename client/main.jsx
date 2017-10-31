@@ -6,5 +6,6 @@ import App from '../imports/ui/App.jsx';
 import '../imports/startup/accounts-config.js';
 
 Meteor.startup(() => {
-  render(<App />, document.getElementById('render-target'));
+    $('html').attr('lang', 'es');
+    render(<App />, document.getElementById('render-target'));
 });

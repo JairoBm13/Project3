@@ -1,15 +1,16 @@
 import React, {Component} from 'react';
 import {Meteor} from 'meteor/meteor';
-import NavBar from './NavBar.jsx'
-import AccountsUIWrapper from './AccountsUIWrapper.jsx';
+import NavBar from '../SmallElements/NavBar.jsx'
 import {Redirect} from 'react-router';
+import AccountsUIWrapper from './AccountsUIWrapper.jsx';
 /* Jairo Bautista: En terminos generales el componente para crear una idea esta muy completo, 
 pero se hubiera podido modularizar mas la parte de requerimientos */
-class CreateProject extends Component {
+
+class CreateIdea extends Component {
 
   constructor(props) {
     super(props);
-    window.scrollTo(0, 0);
+    window.scrollTo(0,0);
     this.state = {
       value: [],
       count: 1,
@@ -17,41 +18,40 @@ class CreateProject extends Component {
       slogan: '',
       description: '',
       thumbnail: '',
-      requirements: [],
-      stage: 'Gestación'
     };
     this.handleSubmit = this.handleSubmit.bind(this);
-    let idea = props.location.query;
-    if (idea){
-      this.state.description = idea.description;
-      this.state.slogan = idea.slogan;
-      this.state.thumbnail = idea.thumbnail;
-      this.state.name = idea.name;
-    }
   }
 
   handleChange(i, event) {
+    this.state.value[i] = event.target.value;
     let value = this.state.value.slice();
     value[i] = event.target.value;
     this.setState({value});
   }
 
-  /* Jairo Bautista: Esta funcion podria ser 
-  un componente que reciba por props los tags de la idea o no, y asíreusa codigo. */
   renderRequirements() {
     let uiItems = [];
     for (let i = 0; i < this.state.count; i++) {
       uiItems.push(
         <div className="center-div" style={{textAlign: 'center'}} key={i}>
           <div className="row" style={{display: 'inline', textAlign: 'center'}}>
-            <div key={i} style={{display: 'inline'}}>
-              {/*<label htmlFor="exampleInputEmail1">Requerimiento {i + 1} &emsp; </label>*/}
-              <input id="exampleSelect1" type="text" value={this.state.value[i] || ''}
-                     placeholder={'Requerimiento ' + (i + 1) + ' ...'}
-                     onChange={this.handleChange.bind(this, i)} required className="requirementInput"/>
-              <input type='button' value='Remove' className="removeReqButton"
-                     onClick={this.removeClick.bind(this, i)}/>
-            </div>
+            {/*<label htmlFor="exampleInputEmail1">Requerimiento {i + 1} &emsp; </label>*/}
+            <select aria-labelledby="tags" className="form-control" id="exampleSelect1" required style={{display: 'inline'}}
+                    onChange={(e) => this.handleChange(i, e)} value={this.state.value[i] || ''}
+                    placeholder={'Requerimiento ' + (i + 1) + ' ...'}>
+              <option>Medicina</option>
+              <option>Ingeniería</option>
+              <option>Planeación</option>
+              <option>Software</option>
+              <option>Imagenes</option>
+              <option>Biología</option>
+              <option>Finanzas</option>
+              <option>Ciencias</option>
+              <option>Mecánica</option>
+              <option>Química</option>
+            </select>
+            <input type='button' value='Remover' className="removeReqButton"
+                   onClick={this.removeClick.bind(this, i)}/>
           </div>
         </div>
       )
@@ -61,9 +61,8 @@ class CreateProject extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.state.requirements = this.state.value;
     let b = this;
-    Meteor.call('tasks.insert', this.state, function (error, result) {
+    Meteor.call('ideas.insert', this.state, function (error, result) {
       if (error) {
         Bert.alert( 'Debes iniciar sesión para poder publicar!', 'danger', 'growl-top-right' );
       }
@@ -88,46 +87,46 @@ class CreateProject extends Component {
 
   render() {
     if (this.state.redirect) {
-      return <Redirect push to="/projects"/>;
+      return <Redirect push to="/ideas"/>;
     }
     return (
       <div>
         <NavBar/>
         <div className="container2">
           <form id="contact" className="form" onSubmit={this.handleSubmit}>
-            <h3>Publica tu proyecto</h3>
+            <h3 id="oport">Publica una oportunidad</h3>
             {/*<h4>Contact us for custom quote</h4>*/}
             <fieldset>
-              <input type="text" className="form-control" id="exampleInputEmail1"
-                     aria-describedby="emailHelp" required
+              <input type="text" className="form-control" id="name"
+                     aria-labelledby="oport" required
                      value={this.state.name}
                      onChange={(event) => this.setState({name: event.target.value})}
                      placeholder="Nombre..."/>
             </fieldset>
             <fieldset>
-              <input type="text" className="form-control" id="exampleInputEmail1"
-                     aria-describedby="emailHelp" required
+              <input type="text" className="form-control" id="slogan"
+                     aria-labelledby="oport" required
                      value={this.state.slogan}
                      onChange={(event) => this.setState({slogan: event.target.value})}
                      placeholder="Slogan..."/>
             </fieldset>
             <fieldset>
-              <input type="text" className="form-control" id="exampleInputEmail1"
-                     aria-describedby="emailHelp" required
+              <input type="text" className="form-control" id="descript"
+                     aria-labelledby="oport" required
                      value={this.state.description}
                      onChange={(event) => this.setState({description: event.target.value})}
                      placeholder="Descripción..."/>
             </fieldset>
             <fieldset>
-              <input type="text" className="form-control" id="exampleInputEmail1"
-                     aria-describedby="emailHelp" required
+              <input type="text" className="form-control" id="val"
+                     aria-labelledby="oport" required
                      value={this.state.thumbnail}
                      onChange={(event) => this.setState({thumbnail: event.target.value})}
                      placeholder="Url thumbnail..."/>
             </fieldset>
             <fieldset>
               <div>
-                <label htmlFor="exampleInputEmail1">Lista de requerimientos de tu proyecto</label><br/>
+                <label id="tags" htmlFor="exampleInputEmail2">Tags de la oportunidad</label><br/>
                 {this.renderRequirements()}
                 <div style={{textAlign: 'center'}}>
                   <input type='button' value='Agregar más' id="addMoreButton"
@@ -136,13 +135,7 @@ class CreateProject extends Component {
               </div>
             </fieldset>
             <fieldset>
-              <select className="form-control" id="exampleSelect2" required
-                      onChange={(e) => this.state.stage = e.target.value}>
-                <option>Gestación</option>
-                <option>Puesta en Marcha</option>
-                <option>Desarrollo Inicial</option>
-                <option>Crecimiento y consolidación</option>
-              </select>
+
             </fieldset>
             <fieldset>
               <button name="submit" type="submit" id="contact-submit" data-submit="...Sending">Submit
@@ -155,4 +148,4 @@ class CreateProject extends Component {
   }
 }
 
-export default CreateProject;
+export default CreateIdea;

@@ -20,23 +20,18 @@ Meteor.methods({
     if (! Meteor.userId()) {
       throw new Meteor.Error('not-authorized');
     }
-    Comments.insert({
+    return Comments.insert({
       text:idea,
       projectId: projectId,
       createdAt : new Date(),
       username : Meteor.user().username,
       owner : Meteor.userId(),
-      username : Meteor.user().username,
     });
   },
   'comments.remove'(ideaId) {
     check(ideaId, String);
 
-    Comments.remove(ideaId);
-  },
-  'comments.setChecked'(ideaId, setChecked) {
-    check(ideaId, String);
-    check(setChecked, Boolean);
+    let tempComment = Comments.find({ _id:ideaId}).fetch()[0];
 
     Comments.update(ideaId, { $set: { checked: setChecked } });
   },
@@ -48,10 +43,10 @@ Meteor.methods({
     const idea = Comments.findOne(ideaId);
 
     // Make sure only the idea owner can make a idea private
-    if (idea.owner !== Meteor.userId()) {
+    if (! Meteor.user() || tempComment.owner != Meteor.userId()) {
       throw new Meteor.Error('not-authorized');
     }
 
-    Comments.update(ideaId, { $set: { private: setToPrivate } });
+    Comments.remove(ideaId);
   },
 });

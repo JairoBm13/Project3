@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react';
-import {Ideas} from '../api/ideas.jsx';
+import {Ideas} from '../../api/ideas.jsx';
 import {Meteor} from 'meteor/meteor';
 import classnames from 'classnames';
 import {Link} from 'react-router-dom';

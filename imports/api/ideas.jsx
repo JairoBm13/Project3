@@ -21,14 +21,14 @@ Meteor.methods({
     check(idea, Object);
 
     // Make sure the user is logged in before inserting a idea
-    // if (! Meteor.userId()) {
-    //   throw new Meteor.Error('not-authorized');
-    // }
+    if (! Meteor.user()) {
+      throw new Meteor.Error('not-authorized');
+    }
 
     idea.createdAt = new Date();
     idea.owner = Meteor.userId();
     idea.username = Meteor.user().username
-    ideas.insert(idea);
+    return ideas.insert(idea);
   },
   'ideas.remove'(ideaId) {
     check(ideaId, String);

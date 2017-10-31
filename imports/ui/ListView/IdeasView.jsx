@@ -1,10 +1,10 @@
 import React, {Component, PropTypes} from 'react';
-import Idea from './Idea.jsx';
+import Idea from '../SingleView/Idea.jsx';
 import {createContainer} from 'meteor/react-meteor-data';
 import {ideas} from '/imports/api/ideas.jsx';
 import ReactDOM from 'react-dom';
 import {Meteor} from 'meteor/meteor';
-import NavBar from './NavBar.jsx'
+import NavBar from '../SmallElements/NavBar.jsx'
 
 /* Jairo Bautista: En terminos generales el componente para crear una idea esta muy completo, 
 pero se hubiera podido modularizar mas la parte de requerimientos */
@@ -64,6 +64,7 @@ class IdeasView extends Component {
             <img className="img-fluid rounded" src="http://www.goaugment.io/wp-content/uploads/2016/07/Innovation-is-an-Attitude.jpg" alt=""/>
           </div>
           <div className="col-lg-4">
+            <br/>
             <h1>Oportunidades</h1>
             <i id="sl">Adopta ideas ¡Soluciona problemas!</i><br/><br/>
             <p>Aquí puedes encontrar un conjunto de ideas y problemas que necesitan solución,
@@ -72,7 +73,7 @@ class IdeasView extends Component {
         </div>
 
         <div className="card text-white bg-secondary my-4 text-center">
-          <div className="card-body">
+          <div className="card-body"  id="midbar">
             <span className="text-white m-0">¡Adopta oportunidades y genera proyectos de alto impacto! </span>
           </div>
         </div>

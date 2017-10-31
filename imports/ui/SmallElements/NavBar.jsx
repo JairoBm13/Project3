@@ -11,22 +11,22 @@ const NavBar = () => (
               aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span className="navbar-toggler-icon"></span>
       </button>
-      <div className="collapse navbar-collapse" id="navbarResponsive">
+      <div className="collapse navbar-collapse " id="navbarResponsive">
         <div className="text-grey navBartext" style={{marginTop: '5px'}}>
           <AccountsUIWrapper id="hol"/>
         </div>
         <ul className="navbar-nav ml-auto">
           <li className="nav-item">
-            <Link className="nav-link navBartext" to='/projects'>Proyectos</Link>
+            <Link className=" navBartext " to='/projects'>Proyectos</Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link navBartext" to='/ideas'>Oportunidades</Link>
+            <Link className="navBartext" to='/ideas'>Oportunidades</Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link navBartext" to='/projects/create'>Crear Proyecto</Link>
+            <Link className="navBartext" to='/projects/create'>Crear Proyecto</Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link navBartext" to='/ideas/create'>Crear oportunidad</Link>
+            <Link className="navBartext" to='/ideas/create'>Crear oportunidad</Link>
           </li>
           {/*<li className="nav-item" style={{textAlign:'left'}}>*/}
           {/*<div id="loginWrapper" className="pull-left">*/}

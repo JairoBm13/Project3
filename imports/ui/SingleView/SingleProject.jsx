@@ -1,12 +1,13 @@
-import React, {Component, PropTypes} from 'react';
+simport React, {Component, PropTypes} from 'react';
 import { Meteor } from 'meteor/meteor';
-import NavBar from './NavBar.jsx'
+import NavBar from '../SmallElements/NavBar.jsx'
 import { Redirect } from 'react-router';
 import { Comments } from '/imports/api/comments';
-import Comment from "./Comment";
+import Comment from "../SmallElements/Comment";
 import { createContainer } from 'meteor/react-meteor-data';
 import { Session } from 'meteor/session'
-import AccountsUIWrapper from './AccountsUIWrapper.jsx';
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css' // Import css
 
 class SingleProject extends Component {
 
@@ -18,7 +19,7 @@ class SingleProject extends Component {
       value: '',
     }
     this.handleSubmit = this.handleSubmit.bind(this);
-
+    this.deleteProject = this.deleteProject.bind(this);
   }
 
   renderComments() {
@@ -40,14 +41,37 @@ class SingleProject extends Component {
 
   sendMail() {
       // Client: Asynchronously send an email.
-      //No deberia ser un email al email que uso el usuario para registrarse (el del dueño del proyecto)
-      Meteor.call(
-          'sendEmail',
-          'Alice <dianasbeltran@gmail.com>',
-          'admin@luisplazas.co',
-          'Hello from Meteor!',
-          'This is a test of Email.send.'
-      );
+      // Meteor.call(
+      //     'sendEmail',
+      //     'Alice <dianasbeltran@gmail.com>',
+      //     'admin@luisplazas.co',
+      //     'Hello from Meteor!',
+      //     'This is a test of Email.send.'
+      // );
+  }
+
+  deleteProject() {
+    confirmAlert({
+      title: '¿Seguro que quieres borrar este proyecto?',                        // Title dialog
+      message: 'Se eliminará el proyecto, los requerimientos y los comentarios.',               // Message dialog
+      // childrenElement: () => <div>Custom UI</div>,       // Custom UI or Component
+      confirmLabel: 'Confirmar',                           // Text button confirm
+      cancelLabel: 'Cancelar',                             // Text button cancel
+      onConfirm: () => this.submitDelete(),    // Action after Confirm
+      onCancel: () => console.log('nothing'),      // Action after Cancel
+    })
+  }
+
+  submitDelete(){
+    let b = this;
+    Meteor.call('tasks.remove', this.state.task._id, function (error, result) {
+      if (error) {
+        Bert.alert( 'Debes iniciar sesión para poder publicar!', 'danger', 'growl-top-right' );
+      }
+      else{
+        b.setState({task:undefined})
+      }
+    });
   }
 
   handleSubmit(event) {
@@ -126,17 +150,40 @@ class SingleProject extends Component {
 
             {/*<!-- Sidebar Widgets Column -->*/}
             <div className="col-md-4">
-                {/*<!-- Participar Widget -->*/}
-              <div className="card my-4">
-                <h5 className="card-header">Participar</h5>
-                <div className="card-body">
-                  <div className="row">
-                    <div className="col-lg-6">
-                      <a type="submit" href={"mailto:"+this.state.task.username} className="btn-default">Enviar mensaje</a>
+
+              {/*<!-- Admin Widget -->*/}
+              {
+                (Meteor.user() && this.state.task.username === Meteor.user().username) ?
+                  (
+                <div className="card my-4">
+                  <h5 className="card-header">Administración</h5>
+                  <div className="card-body">
+                    <div className="row">
+                      <div className="col-lg-12">
+                        <a type="submit" onClick={() => this.deleteProject()} id="deleteProjectButt" className="btn-default">Eliminar proyecto</a>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+                  ) : null
+              }
+
+                {/*<!-- Participation Widget -->*/}
+              { Meteor.user() ?
+                (
+                <div className="card my-4">
+                  <h5 className="card-header">Participar</h5>
+                  <div className="card-body">
+                    <div className="row">
+                      <div className="col-lg-6">
+                        <a type="submit" href={"mailto:" + Meteor.user().emails[0].address} className="btn-default">Enviar
+                          mensaje</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                ) : null
+              }
 
               {/*<!-- Requirements Widget -->*/}
               <div className="card my-4">
@@ -174,17 +221,6 @@ class SingleProject extends Component {
     )
   }
 }
-
-// export default createContainer(() => {
-//   Meteor.subscribe('comments');
-//   console.log(Comments.find({}).fetch())
-//   return {
-//     // comments: Comments.find({}, {sort: {createdAt: -1}}).fetch(),
-//     comments: Comments.find({}).fetch(),
-//     currentUser: Meteor.user(),
-//   };
-//   console.log(comments)
-// }, SingleProject);
 
 export default createContainer(() => {
   Meteor.subscribe('comments', Session.get('projectId'));
